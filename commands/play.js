@@ -1,4 +1,4 @@
-const {GuildMember, ApplicationCommandOptionType } = require('discord.js');
+const {GuildMember, ApplicationCommandOptionType} = require('discord.js');
 const {QueryType} = require('discord-player');
 
 module.exports = {
@@ -45,11 +45,13 @@ module.exports = {
 
       const queue = await player.createQueue(interaction.guild, {
         ytdlOptions: {
-				quality: "highest",
-				filter: "audioonly",
-				highWaterMark: 1 << 30,
-				dlChunkSize: 0,
-			},
+          // filter: 'audioonly',
+          // quality: [91, 92, 93, 94, 95],
+          quality: 'highestaudio',
+          highWaterMark: 1 << 25,
+          dlChunkSize: 0,
+          liveBuffer: 4900,
+        },
         metadata: interaction.channel,
       });
 
