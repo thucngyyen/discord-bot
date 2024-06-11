@@ -1,12 +1,10 @@
-require('dotenv').config()
+require('dotenv').config();
 
 const fs = require('fs');
 const Discord = require('discord.js');
 const Client = require('./client/Client');
 const config = require('./config.json');
 const {Player} = require('discord-player');
-
-const {ActivityType} = require('discord.js');
 
 const client = new Client();
 client.commands = new Discord.Collection();
@@ -22,7 +20,7 @@ console.log(client.commands);
 
 const player = new Player(client);
 
-player.extractors.loadDefault().then(r => console.log('Extractors loaded successfully'))
+player.extractors.loadDefault().then(r => console.log('Extractors loaded successfully'));
 
 // Still needs to be refactored for 0.6
 /*player.events.on('connection', (queue) => {
@@ -62,6 +60,8 @@ player.events.on('emptyChannel', queue => {
 
 player.events.on('emptyQueue', queue => {
     queue.metadata.channel.send('✅ | Queue finished!');
+    // Delete queue and disconnect from voice channel
+    queue.delete();
 });
 
 player.events.on('error', (queue, error) => {
@@ -86,8 +86,8 @@ client.on('ready', function () {
     console.log('Ready!');
     client.user.presence.set({
         activities: [{name: config.activity, type: Number(config.activityType)}],
-        status: Discord.Status.Ready
-    })
+        status: Discord.Status.Ready,
+    });
 });
 
 client.once('reconnecting', () => {
